@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑豹陶艺电商平台</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff5a35;
+            --secondary-color: #3d3d3d;
+            --accent-color: #f8f9fa;
+            --hover-color: #ff3d00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', "Microsoft Yahei", sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* 导航栏 */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--hover-color) 100%);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            width: 50px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            position: relative;
+            padding: 8px 0;
+            transition: 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box {
+            border-radius: 10px;
+            padding: 10px 20px;
+            width: 400px;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 90, 53, 0.2);
+        }
+
+        .search-button {
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px 25px;
+            margin-left: -20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-button:hover {
+            background: #2e2e2e;
+            transform: scale(1.05);
+        }
+
+        .user-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .user-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* 分类侧边栏 - 修改为固定宽度的浮动元素 */
+        .category-sidebar {
+            width: 240px;
+            background: white;
+            padding: 25px;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.05);
+            float: left;
+            margin-top: 20px;
+        }
+
+        .category-menu li {
+            list-style: none;
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .category-menu li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 4px;
+            background: var(--primary-color);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .category-menu li:hover {
+            background: #fff5f2;
+            padding-left: 30px;
+        }
+
+        .category-menu li:hover::before {
+            opacity: 1;
+        }
+
+        /* 商品展示区 - 调整为一行显示4个商品 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 修改为4列 */
+            gap: 20px; /* 略微缩小间距 */
+            padding: 30px 5%;
+            margin-left: 260px; /* 为侧边栏留出空间 */
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 调整商品卡片大小 */
+        .product-card {
+            background: white;
+            padding: 15px; /* 减少内边距 */
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+            transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px); /* 减少悬停时的上移距离 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.09);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 180px; /* 减小图片高度 */
+            object-fit: contain;
+            border-radius: 8px;
+            padding: 10px; /* 减少图片内边距 */
+            transition: 0.3s;
+        }
+
+        .product-img:hover {
+            transform: scale(1.04); /* 减小悬停时的缩放比例 */
+        }
+
+        .product-title {
+            color: var(--secondary-color);
+            margin: 10px 0; /* 减少上下边距 */
+            font-size: 1rem; /* 减小字体大小 */
+            line-height: 1.4;
+        }
+
+        .product-price {
+            color: var(--primary-color);
+            font-size: 1.1rem; /* 减小价格字体大小 */
+            font-weight: 700;
+            margin: 10px 0; /* 减少上下边距 */
+        }
+
+        .original-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 0.85rem; /* 减小原价字体大小 */
+            margin-left: 8px;
+        }
+
+        .promotion-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 12px; /* 减小标签内边距 */
+            border-radius: 0 0 12px 0;
+            font-size: 12px; /* 减小标签字体大小 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-weight: 700;
+        }
+
+        .buy-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 8px 20px; /* 减小按钮内边距 */
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.3s;
+            margin-top: 8px; /* 减小顶部边距 */
+            font-size: 0.9rem; /* 减小按钮字体大小 */
+        }
+
+        .buy-button:hover {
+            background: #2e2e2e;
+            transform: scale(1.03); /* 减小悬停时的缩放比例 */
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--secondary-color);
+            color: white;
+            padding: 50px 5%;
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 4px solid var(--primary-color);
+            clear: both; /* 清除浮动，确保页脚显示在正确位置 */
+        }
+
+        .footer-section {
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .footer-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 6px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-section li:hover {
+            color: var(--primary-color);
+            transform: translateX(4px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.3rem;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: scale(1.15);
+        }
+
+        /* 响应式布局 */
+        @media (max-width: 1440px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr); /* 在大屏幕上保持3列 */
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .search-box {
+                width: 250px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                margin-left: 0;
+            }
+
+            .category-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .search-container {
+                order: 3;
+                width: 100%;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-links {
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 保持原有HTML结构不变，内容与用户提供的原始文件一致 -->
+    <header class="header">
+        <img src="./logo.png" alt="网站logo" class="logo">
+        <nav class="nav-links">
+            <a href="#">首页</a>
+            <a href="#">秒杀</a>
+            <a href="#">优惠券</a>
+            <a href="#">品牌特卖</a>
+        </nav>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="搜索陶艺商品...">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="search-button">搜索</button>
+        </div>
+        <div class="user-links">
+            <a href="#">登录</a>
+            <span style="color: rgba(255, 255, 255, 0.6)">|</span>
+            <a href="#">注册</a>
+            <a href="#">🛒 购物车</a>
+        </div>
+    </header>
+
+    <aside class="category-sidebar">
+        <ul class="category-menu">
+            <li>传统陶艺作品</li>
+            <li>创意陶艺摆件</li>
+            <li>陶艺茶具</li>
+            <li>陶瓷雕塑</li>
+            <li>装饰瓷盘</li>
+            <li>艺术花瓶</li>
+            <li>高端纸壳陶</li>
+        </ul>
+    </aside>
+
+    <main class="product-grid">
+        <!-- 商品卡片（保持用户原有结构，图片路径需自行替换） -->
+        <article class="product-card">
+            <span class="promotion-tag">限时秒杀</span>
+            <img src="./1.JPEG" alt="双把黑陶壶" class="product-img">
+            <h3 class="product-title">双把黑陶壶</h3>
+            <div class="product-price">
+                ¥688.00
+                <span class="original-price">¥876.00</span>
+            </div>
+            <a href="#" class="buy-button">立即购买</a>
+        </article>
+
+        <article class="product-card">
+            <span class="promotion-tag">新品上市</span>
+            <img src="./2.JPEG" alt="青花瓷碗套装" class="product-img">
+            <h3 class="product-title">黑陶小碗套装</h3>
+            <div class="product-price">
+                ¥398.00
+                <span class="original-price">¥499.00</span>
+            </div>
+            <a href="#" class="buy-button">立即购买</a>
+        </article>
+
+        <article class="product-card">
+            <img src="./3.JPEG" alt="艺术花瓶" class="product-img">
+            <h3 class="product-title">黑陶四耳锅</h3>
+            <div class="product-price">
+                ¥572.00
+            </div>
+            <a href="#" class="buy-button">立即购买</a>
+        </article>
+
+        <article class="product-card">
+            <img src="./4.JPEG" alt="陶瓷茶具套装" class="product-img">
+            <h3 class="product-title">黑陶对锅</h3>
+            <div class="product-price">
+                ¥599.00
+            </div>
+            <a href="#" class="buy-button">立即购买</a>
+        </article>
+
+        <article class="product-card">
+            <span class="promotion-tag">限时秒杀</span>
+            <img src="./5.JPEG" alt="黑陶茶杯" class="product-img">
+            <h3 class="product-title">黑陶炭火煮茶炉</h3>
+            <div class="product-price">
+                ¥729.00
+                <span class="original-price">¥998.00</span>
+            </div>
+            <a href="#" class="buy-button">立即购买</a>
+        </article>
+
+        <article class="product-card">
+            <img src="./6.JPEG" alt="陶瓷装饰盘" class="product-img">
+            <h3 class="product-title">黑陶艺术花瓶</h3>
+            <div class="product-price">
+                ¥699.00
+            </div>
+            <a href="#" class="buy-button">立即购买</a>
+        </article>
+
+        <article class="product-card">
+            <span class="promotion-tag">热销商品</span>
+            <img src="./7.jpg" alt="紫砂茶壶" class="product-img">
+            <h3 class="product-title">蛋壳陶摆件</h3>
+            <div class="product-price">
+                ¥459.00
+            </div>
+            <a href="#" class="buy-button">立即购买</a>
+        </article>
+
+        <article class="product-card">
+            <img src="./8.jpg" alt="陶瓷花瓶" class="product-img">
+            <h3 class="product-title">黑陶佛手摆件</h3>
+            <div class="product-price">
+                ¥329.00
+            </div>
+            <a href="#" class="buy-button">立即购买</a>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-section">
+            <h4>客户服务</h4>
+            <ul>
+                <li>帮助中心</li>
+                <li>售后服务</li>
+                <li>人工客服</li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>关于我们</h4>
+            <ul>
+                <li>公司简介</li>
+                <li>联系我们</li>
+                <li>加入我们</li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <p>© 2025 黑豹陶艺 版权所有</p>
+            <p>ICP备案号：京ICP备XXXXXX号</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit-id.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
