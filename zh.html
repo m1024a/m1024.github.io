@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panther Pottery E-commerce Platform</title>
+    <title>黑豹陶艺电商平台</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,8 +24,19 @@
             font-family: 'Noto Sans SC', "Microsoft Yahei", sans-serif;
             background-color: #f8f9fa;
         }
-
-        /* Navigation bar */
+  /* 语言切换按钮样式 */
+        #language-switch {
+            background: rgba(255,255,255,0.1);
+            padding: 6px 12px !important;
+            border-radius: 16px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        
+        #language-switch:hover {
+            background: var(--primary-color);
+        }
+        /* 导航栏 */
         .header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--hover-color) 100%);
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
@@ -138,19 +149,8 @@
             background: rgba(255, 255, 255, 0.1);
             transform: scale(1.05);
         }
-  /* 语言切换按钮样式 */
-        #language-switch {
-            background: rgba(255,255,255,0.1);
-            padding: 6px 12px !important;
-            border-radius: 16px;
-            font-weight: 700;
-            transition: 0.3s;
-        }
-        
-        #language-switch:hover {
-            background: var(--primary-color);
-        }
-        /* Category sidebar - Modified to a floating element with a fixed width */
+
+        /* 分类侧边栏 - 修改为固定宽度的浮动元素 */
         .category-sidebar {
             width: 240px;
             background: white;
@@ -191,13 +191,13 @@
             opacity: 1;
         }
 
-        /* Product display area - Adjusted to display 4 products in a row */
+        /* 商品展示区 - 调整为一行显示4个商品 */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Modified to 4 columns */
-            gap: 20px; /* Slightly reduced spacing */
+            grid-template-columns: repeat(4, 1fr); /* 修改为4列 */
+            gap: 20px; /* 略微缩小间距 */
             padding: 30px 5%;
-            margin-left: 260px; /* Make space for the sidebar */
+            margin-left: 260px; /* 为侧边栏留出空间 */
             animation: fadeIn 0.5s ease-out;
         }
 
@@ -211,10 +211,10 @@
             }
         }
 
-        /* Adjust the size of product cards */
+        /* 调整商品卡片大小 */
         .product-card {
             background: white;
-            padding: 15px; /* Reduced padding */
+            padding: 15px; /* 减少内边距 */
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
             transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -223,50 +223,50 @@
         }
 
         .product-card:hover {
-            transform: translateY(-6px); /* Reduced upward movement when hovering */
+            transform: translateY(-6px); /* 减少悬停时的上移距离 */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.09);
         }
 
         .product-img {
             width: 100%;
-            height: 180px; /* Reduced image height */
+            height: 180px; /* 减小图片高度 */
             object-fit: contain;
             border-radius: 8px;
-            padding: 10px; /* Reduced image padding */
+            padding: 10px; /* 减少图片内边距 */
             transition: 0.3s;
         }
 
         .product-img:hover {
-            transform: scale(1.04); /* Reduced scaling ratio when hovering */
+            transform: scale(1.04); /* 减小悬停时的缩放比例 */
         }
 
         .product-title {
             color: var(--secondary-color);
-            margin: 10px 0; /* Reduced top and bottom margins */
-            font-size: 1rem; /* Reduced font size */
+            margin: 10px 0; /* 减少上下边距 */
+            font-size: 1rem; /* 减小字体大小 */
             line-height: 1.4;
         }
 
         .product-price {
             color: var(--primary-color);
-            font-size: 1.1rem; /* Reduced price font size */
+            font-size: 1.1rem; /* 减小价格字体大小 */
             font-weight: 700;
-            margin: 10px 0; /* Reduced top and bottom margins */
+            margin: 10px 0; /* 减少上下边距 */
         }
 
         .original-price {
             color: #999;
             text-decoration: line-through;
-            font-size: 0.85rem; /* Reduced original price font size */
+            font-size: 0.85rem; /* 减小原价字体大小 */
             margin-left: 8px;
         }
 
         .promotion-tag {
             background: var(--primary-color);
             color: white;
-            padding: 5px 12px; /* Reduced tag padding */
+            padding: 5px 12px; /* 减小标签内边距 */
             border-radius: 0 0 12px 0;
-            font-size: 12px; /* Reduced tag font size */
+            font-size: 12px; /* 减小标签字体大小 */
             position: absolute;
             top: 0;
             left: 0;
@@ -277,20 +277,20 @@
             display: inline-block;
             background: var(--secondary-color);
             color: white;
-            padding: 8px 20px; /* Reduced button padding */
+            padding: 8px 20px; /* 减小按钮内边距 */
             border-radius: 6px;
             text-decoration: none;
             transition: 0.3s;
-            margin-top: 8px; /* Reduced top margin */
-            font-size: 0.9rem; /* Reduced button font size */
+            margin-top: 8px; /* 减小顶部边距 */
+            font-size: 0.9rem; /* 减小按钮字体大小 */
         }
 
         .buy-button:hover {
             background: #2e2e2e;
-            transform: scale(1.03); /* Reduced scaling ratio when hovering */
+            transform: scale(1.03); /* 减小悬停时的缩放比例 */
         }
 
-        /* Footer */
+        /* 页脚 */
         .footer {
             background: var(--secondary-color);
             color: white;
@@ -299,7 +299,7 @@
             display: flex;
             justify-content: space-around;
             border-top: 4px solid var(--primary-color);
-            clear: both; /* Clear the float to ensure the footer is displayed in the correct position */
+            clear: both; /* 清除浮动，确保页脚显示在正确位置 */
         }
 
         .footer-section {
@@ -346,10 +346,10 @@
             transform: scale(1.15);
         }
 
-        /* Responsive layout */
+        /* 响应式布局 */
         @media (max-width: 1440px) {
             .product-grid {
-                grid-template-columns: repeat(3, 1fr); /* Keep 3 columns on large screens */
+                grid-template-columns: repeat(3, 1fr); /* 在大屏幕上保持3列 */
             }
         }
 
@@ -405,146 +405,143 @@
 </head>
 
 <body>
-    <!-- Keep the original HTML structure unchanged, with content consistent with the original file provided by the user -->
+    <!-- 保持原有HTML结构不变，内容与用户提供的原始文件一致 -->
     <header class="header">
-        <img src="./logo.png" alt="Website logo" class="logo">
+        <img src="./logo.png" alt="网站logo" class="logo">
         <nav class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Flash Sale</a>
-            <a href="#">Coupons</a>
-            <a href="#">Brand Specials</a>
+            <a href="#">首页</a>
+            <a href="#">秒杀</a>
+            <a href="#">优惠券</a>
+            <a href="#">品牌特卖</a>
         </nav>
         <div class="search-container">
-            <input type="text" class="search-box" placeholder="Search for pottery products...">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="search-button">Search</button>
+            <input type="text" class="search-box" placeholder="搜索陶艺商品...">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="search-button">搜索</button>
         </div>
         <div class="user-links">
-            
-            
-            <a href="#">Login</a>
+            <a href="#">登录</a>
             <span style="color: rgba(255, 255, 255, 0.6)">|</span>
-            <a href="#">Register</a>
-           <span style="color: rgba(255, 255, 255, 0.6)">|</span>
-
-            <a href="#">🛒 Shopping Cart</a>
+            <a href="#">注册</a>
+            <a href="#">🛒 购物车</a>
             <span style="color: rgba(255, 255, 255, 0.6)">|</span>
-            <a href="./zh.html" id="language-switch">CH</a>
+            <a href="./index.html" id="language-switch">EN</a>
         </div>
     </header>
 
     <aside class="category-sidebar">
         <ul class="category-menu">
-            <li>Traditional Pottery Works</li>
-            <li>Creative Pottery Ornaments</li>
-            <li>Pottery Tea Sets</li>
-            <li>Ceramic Sculptures</li>
-            <li>Decorative Plates</li>
-            <li>Art Vases</li>
-            <li>High-end Paper-shell Pottery</li>
+            <li>传统陶艺作品</li>
+            <li>创意陶艺摆件</li>
+            <li>陶艺茶具</li>
+            <li>陶瓷雕塑</li>
+            <li>装饰瓷盘</li>
+            <li>艺术花瓶</li>
+            <li>高端纸壳陶</li>
         </ul>
     </aside>
 
     <main class="product-grid">
-        <!-- Product cards (Keep the original structure provided by the user, and replace the image paths yourself) -->
+        <!-- 商品卡片（保持用户原有结构，图片路径需自行替换） -->
         <article class="product-card">
-            <span class="promotion-tag">Limited-time Flash Sale</span>
-            <img src="https://pcsdata.baidu.com/thumbnail/6bb34b337g3bc65471abbe6f877df481?fid=397800431-16051585-124697464142689&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-4ocTMIR2AtHP7pjo5K8DAjOecN4%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957033965787252022&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Double-handled Black Pottery Pot" class="product-img">
-            <h3 class="product-title">Double-handled Black Pottery Pot</h3>
+            <span class="promotion-tag">限时秒杀</span>
+            <img src="https://pcsdata.baidu.com/thumbnail/6bb34b337g3bc65471abbe6f877df481?fid=397800431-16051585-124697464142689&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-4ocTMIR2AtHP7pjo5K8DAjOecN4%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957033965787252022&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="双把黑陶壶" class="product-img">
+            <h3 class="product-title">双把黑陶壶</h3>
             <div class="product-price">
-                $688.00
-                <span class="original-price">$876.00</span>
+                ¥688.00
+                <span class="original-price">¥876.00</span>
             </div>
-            <a href="#" class="buy-button">Buy Now</a>
+            <a href="#" class="buy-button">立即购买</a>
         </article>
 
         <article class="product-card">
-            <span class="promotion-tag">New Arrival</span>
-            <img src="https://pcsdata.baidu.com/thumbnail/3f36a8ff8o63e06326823d4b8acb6efe?fid=397800431-16051585-405982205595799&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-qXXpiRm9QQsAxdojUt0hlPd1moA%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Blue and White Porcelain Bowl Set" class="product-img">
-            <h3 class="product-title">Black Pottery Small Bowl Set</h3>
+            <span class="promotion-tag">新品上市</span>
+            <img src="https://pcsdata.baidu.com/thumbnail/3f36a8ff8o63e06326823d4b8acb6efe?fid=397800431-16051585-405982205595799&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-qXXpiRm9QQsAxdojUt0hlPd1moA%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="青花瓷碗套装" class="product-img">
+            <h3 class="product-title">黑陶小碗套装</h3>
             <div class="product-price">
-                $398.00
-                <span class="original-price">$499.00</span>
+                ¥398.00
+                <span class="original-price">¥499.00</span>
             </div>
-            <a href="#" class="buy-button">Buy Now</a>
+            <a href="#" class="buy-button">立即购买</a>
         </article>
 
         <article class="product-card">
-            <img src="https://pcsdata.baidu.com/thumbnail/aa7003c20u5fa2a4529ba396fa4f4599?fid=397800431-16051585-1058977902222712&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-oDm2ZJhdcnLLXs5HjzaFE9Pazyw%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Art Vase" class="product-img">
-            <h3 class="product-title">Black Pottery Four-ear Pot</h3>
+            <img src="https://pcsdata.baidu.com/thumbnail/aa7003c20u5fa2a4529ba396fa4f4599?fid=397800431-16051585-1058977902222712&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-oDm2ZJhdcnLLXs5HjzaFE9Pazyw%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="艺术花瓶" class="product-img">
+            <h3 class="product-title">黑陶四耳锅</h3>
             <div class="product-price">
-                $572.00
+                ¥572.00
             </div>
-            <a href="#" class="buy-button">Buy Now</a>
+            <a href="#" class="buy-button">立即购买</a>
         </article>
 
         <article class="product-card">
-            <img src="https://pcsdata.baidu.com/thumbnail/494cd8cedk9f50b86f6848b2a6c8b1d5?fid=397800431-16051585-298993675410356&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-MR9k6pSbEkosICiQRtlhmVFOqGE%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Ceramic Tea Set" class="product-img">
-            <h3 class="product-title">Black Pottery Double Pots</h3>
+            <img src="https://pcsdata.baidu.com/thumbnail/494cd8cedk9f50b86f6848b2a6c8b1d5?fid=397800431-16051585-298993675410356&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-MR9k6pSbEkosICiQRtlhmVFOqGE%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="陶瓷茶具套装" class="product-img">
+            <h3 class="product-title">黑陶对锅</h3>
             <div class="product-price">
-                $599.00
+                ¥599.00
             </div>
-            <a href="#" class="buy-button">Buy Now</a>
+            <a href="#" class="buy-button">立即购买</a>
         </article>
 
         <article class="product-card">
-            <span class="promotion-tag">Limited-time Flash Sale</span>
-            <img src="https://pcsdata.baidu.com/thumbnail/4d7e61af0o5e4708d7b704bf36cba81a?fid=397800431-16051585-215639458074096&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-DQ2rklydQ3UAE7yIhJALAqXNRSo%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Black Pottery Teacup" class="product-img">
-            <h3 class="product-title">Black Pottery Charcoal Tea-boiling Stove</h3>
+            <span class="promotion-tag">限时秒杀</span>
+            <img src="https://pcsdata.baidu.com/thumbnail/4d7e61af0o5e4708d7b704bf36cba81a?fid=397800431-16051585-215639458074096&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-DQ2rklydQ3UAE7yIhJALAqXNRSo%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="黑陶茶杯" class="product-img">
+            <h3 class="product-title">黑陶炭火煮茶炉</h3>
             <div class="product-price">
-                $729.00
-                <span class="original-price">$998.00</span>
+                ¥729.00
+                <span class="original-price">¥998.00</span>
             </div>
-            <a href="#" class="buy-button">Buy Now</a>
+            <a href="#" class="buy-button">立即购买</a>
         </article>
 
         <article class="product-card">
-            <img src="https://pcsdata.baidu.com/thumbnail/2b3f6479ep15846f48152b068480347d?fid=397800431-16051585-746379539386064&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-vOdcZREYigMe7Aeu4Enk7VXFHuU%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Ceramic Decorative Plate" class="product-img">
-            <h3 class="product-title">Black Pottery Art Vase</h3>
+            <img src="https://pcsdata.baidu.com/thumbnail/2b3f6479ep15846f48152b068480347d?fid=397800431-16051585-746379539386064&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-vOdcZREYigMe7Aeu4Enk7VXFHuU%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="陶瓷装饰盘" class="product-img">
+            <h3 class="product-title">黑陶艺术花瓶</h3>
             <div class="product-price">
-                $699.00
+                ¥699.00
             </div>
-            <a href="#" class="buy-button">Buy Now</a>
+            <a href="#" class="buy-button">立即购买</a>
         </article>
 
         <article class="product-card">
-            <span class="promotion-tag">Hot Sale</span>
-            <img src="https://pcsdata.baidu.com/thumbnail/6601cfd73ifabe0ee4ee444155555b72?fid=397800431-16051585-419820360275958&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-H3te2bvG3EVrLoLnPdhLrH%2F8GF4%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Purple Clay Teapot" class="product-img">
-            <h3 class="product-title">Eggshell Pottery Ornament</h3>
+            <span class="promotion-tag">热销商品</span>
+            <img src="https://pcsdata.baidu.com/thumbnail/6601cfd73ifabe0ee4ee444155555b72?fid=397800431-16051585-419820360275958&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-H3te2bvG3EVrLoLnPdhLrH%2F8GF4%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="紫砂茶壶" class="product-img">
+            <h3 class="product-title">蛋壳陶摆件</h3>
             <div class="product-price">
-                $459.00
+                ¥459.00
             </div>
-            <a href="#" class="buy-button">Buy Now</a>
+            <a href="#" class="buy-button">立即购买</a>
         </article>
 
         <article class="product-card">
-            <img src="https://pcsdata.baidu.com/thumbnail/eadfc1d7au210c4772d50827e2aaa550?fid=397800431-16051585-899792112186151&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-OnOnz7nue5hFVjOdcPYgo%2B1JF20%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Ceramic Vase" class="product-img">
-            <h3 class="product-title">Black Pottery Buddha's Hand Ornament</h3>
+            <img src="https://pcsdata.baidu.com/thumbnail/eadfc1d7au210c4772d50827e2aaa550?fid=397800431-16051585-899792112186151&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-OnOnz7nue5hFVjOdcPYgo%2B1JF20%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="陶瓷花瓶" class="product-img">
+            <h3 class="product-title">黑陶佛手摆件</h3>
             <div class="product-price">
-                $329.00
+                ¥329.00
             </div>
-            <a href="#" class="buy-button">Buy Now</a>
+            <a href="#" class="buy-button">立即购买</a>
         </article>
     </main>
 
     <footer class="footer">
         <div class="footer-section">
-            <h4>Customer Service</h4>
+            <h4>客户服务</h4>
             <ul>
-                <li>Help Center</li>
-                <li>After-sales Service</li>
-                <li>Customer Support</li>
+                <li>帮助中心</li>
+                <li>售后服务</li>
+                <li>人工客服</li>
             </ul>
         </div>
         <div class="footer-section">
-            <h4>About Us</h4>
+            <h4>关于我们</h4>
             <ul>
-                <li>Company Introduction</li>
-                <li>Contact Us</li>
-                <li>Join Us</li>
+                <li>公司简介</li>
+                <li>联系我们</li>
+                <li>加入我们</li>
             </ul>
         </div>
         <div class="footer-section">
-            <p>© 2025 Panther Pottery. All rights reserved.</p>
+            <p>© 2025 黑豹陶艺 版权所有</p>
+            <p>ICP备案号：京ICP备XXXXXX号</p>
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
