@@ -1,558 +1,706 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xuanming pottery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #ff5a35;
-            --secondary-color: #3d3d3d;
-            --accent-color: #f8f9fa;
-            --hover-color: #ff3d00;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans SC', "Microsoft Yahei", sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        /* Navigation bar */
-        .header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--hover-color) 100%);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            padding: 12px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 100;
-            animation: slideDown 0.5s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-
-            to {
-                transform: translateY(0);
+    <title>舒适科技 - 鞋垫产品管理与展示系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        basic: '#6E7191',
+                        upgrade: '#32917B',
+                        detect: '#165DFF',
+                        custom: '#A56EFF',
+                        sales: '#F53F3F',
+                        sidebar: '#1E293B',
+                        content: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
             }
         }
-
-        .logo {
-            width: 50px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            position: relative;
-            padding: 8px 0;
-            transition: 0.3s;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: white;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-box {
-            border-radius: 10px;
-            padding: 10px 20px;
-            width: 400px;
-            border: none;
-            transition: 0.3s;
-        }
-
-        .search-box:focus {
-            outline: none;
-            box-shadow: 0 0 15px rgba(255, 90, 53, 0.2);
-        }
-
-        .search-button {
-            background: var(--secondary-color);
-            color: white;
-            padding: 10px 25px;
-            margin-left: -20px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .search-button:hover {
-            background: #2e2e2e;
-            transform: scale(1.05);
-        }
-
-        .user-links {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .user-links a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .user-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-        }
-  /* 语言切换按钮样式 */
-        #language-switch {
-            background: rgba(255,255,255,0.1);
-            padding: 6px 12px !important;
-            border-radius: 16px;
-            font-weight: 700;
-            transition: 0.3s;
-        }
-        
-        #language-switch:hover {
-            background: var(--primary-color);
-        }
-        /* Category sidebar - Modified to a floating element with a fixed width */
-        .category-sidebar {
-            width: 240px;
-            background: white;
-            padding: 25px;
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.05);
-            float: left;
-            margin-top: 20px;
-        }
-
-        .category-menu li {
-            list-style: none;
-            padding: 12px 20px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-            position: relative;
-            transition: 0.3s;
-        }
-
-        .category-menu li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 60%;
-            width: 4px;
-            background: var(--primary-color);
-            opacity: 0;
-            transition: 0.3s;
-        }
-
-        .category-menu li:hover {
-            background: #fff5f2;
-            padding-left: 30px;
-        }
-
-        .category-menu li:hover::before {
-            opacity: 1;
-        }
-
-        /* Product display area - Adjusted to display 4 products in a row */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Modified to 4 columns */
-            gap: 20px; /* Slightly reduced spacing */
-            padding: 30px 5%;
-            margin-left: 260px; /* Make space for the sidebar */
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
             }
-
-            to {
-                opacity: 1;
+            /* 前台样式 */
+            .product-card {
+                @apply bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100;
             }
-        }
-
-        /* Adjust the size of product cards */
-        .product-card {
-            background: white;
-            padding: 15px; /* Reduced padding */
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
-            transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-card:hover {
-            transform: translateY(-6px); /* Reduced upward movement when hovering */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.09);
-        }
-
-        .product-img {
-            width: 100%;
-            height: 180px; /* Reduced image height */
-            object-fit: contain;
-            border-radius: 8px;
-            padding: 10px; /* Reduced image padding */
-            transition: 0.3s;
-        }
-
-        .product-img:hover {
-            transform: scale(1.04); /* Reduced scaling ratio when hovering */
-        }
-
-        .product-title {
-            color: var(--secondary-color);
-            margin: 10px 0; /* Reduced top and bottom margins */
-            font-size: 1rem; /* Reduced font size */
-            line-height: 1.4;
-        }
-
-        .product-price {
-            color: var(--primary-color);
-            font-size: 1.1rem; /* Reduced price font size */
-            font-weight: 700;
-            margin: 10px 0; /* Reduced top and bottom margins */
-        }
-
-        .original-price {
-            color: #999;
-            text-decoration: line-through;
-            font-size: 0.85rem; /* Reduced original price font size */
-            margin-left: 8px;
-        }
-
-        .promotion-tag {
-            background: var(--primary-color);
-            color: white;
-            padding: 5px 12px; /* Reduced tag padding */
-            border-radius: 0 0 12px 0;
-            font-size: 12px; /* Reduced tag font size */
-            position: absolute;
-            top: 0;
-            left: 0;
-            font-weight: 700;
-        }
-
-        .buy-button {
-            display: inline-block;
-            background: var(--secondary-color);
-            color: white;
-            padding: 8px 20px; /* Reduced button padding */
-            border-radius: 6px;
-            text-decoration: none;
-            transition: 0.3s;
-            margin-top: 8px; /* Reduced top margin */
-            font-size: 0.9rem; /* Reduced button font size */
-        }
-
-        .buy-button:hover {
-            background: #2e2e2e;
-            transform: scale(1.03); /* Reduced scaling ratio when hovering */
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--secondary-color);
-            color: white;
-            padding: 50px 5%;
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-around;
-            border-top: 4px solid var(--primary-color);
-            clear: both; /* Clear the float to ensure the footer is displayed in the correct position */
-        }
-
-        .footer-section {
-            flex: 1;
-            max-width: 250px;
-        }
-
-        .footer-section h4 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section li {
-            margin-bottom: 6px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .footer-section li:hover {
-            color: var(--primary-color);
-            transform: translateX(4px);
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .social-icons a {
-            color: white;
-            font-size: 1.3rem;
-            transition: 0.3s;
-        }
-
-        .social-icons a:hover {
-            color: var(--primary-color);
-            transform: scale(1.15);
-        }
-
-        /* Responsive layout */
-        @media (max-width: 1440px) {
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr); /* Keep 3 columns on large screens */
+            .product-card:hover {
+                @apply -translate-y-2;
             }
-        }
-
-        @media (max-width: 1200px) {
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr);
+            .price-tag {
+                @apply absolute top-4 right-4 rounded-full py-1 px-4 font-bold text-sm z-10;
             }
-        }
-
-        @media (max-width: 992px) {
-            .nav-links {
-                display: none;
+            .sales-tag {
+                @apply absolute top-4 left-4 rounded-full py-1 px-3 font-bold text-xs z-10 bg-sales/90 text-white flex items-center gap-1;
             }
-
-            .search-box {
-                width: 250px;
+            
+            /* 后台样式 */
+            .sidebar-item {
+                @apply flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-primary/10 hover:text-primary transition-colors rounded-lg;
             }
-
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-                margin-left: 0;
+            .sidebar-item.active {
+                @apply bg-primary/20 text-primary font-medium;
             }
-
-            .category-sidebar {
-                display: none;
+            .form-input {
+                @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all;
             }
-        }
-
-        @media (max-width: 576px) {
-            .header {
-                flex-wrap: wrap;
-                gap: 15px;
+            .btn {
+                @apply px-4 py-2 rounded-lg transition-colors font-medium;
             }
-
-            .search-container {
-                order: 3;
-                width: 100%;
+            .btn-primary {
+                @apply bg-primary text-white hover:bg-primary/90;
             }
-
-            .search-box {
-                width: 100%;
+            .btn-success {
+                @apply bg-upgrade text-white hover:bg-upgrade/90;
             }
-
-            .product-grid {
-                grid-template-columns: 1fr;
+            .btn-danger {
+                @apply bg-sales text-white hover:bg-sales/90;
             }
-
-            .user-links {
-                margin-left: auto;
+            .btn-outline {
+                @apply border border-gray-300 text-gray-700 hover:bg-gray-100;
+            }
+            
+            /* 切换样式 */
+            .page-section {
+                @apply transition-all duration-300 ease-in-out;
+            }
+            .toggle-btn {
+                @apply fixed top-4 right-4 z-50 px-4 py-2 rounded-lg font-medium shadow-lg transition-all hover:shadow-xl;
             }
         }
     </style>
 </head>
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- 页面切换按钮 -->
+    <button id="togglePage" class="toggle-btn bg-primary text-white">
+        <i class="fa fa-cog mr-1"></i> 切换到管理后台
+    </button>
 
-<body>
-    <!-- Keep the original HTML structure unchanged, with content consistent with the original file provided by the user -->
-    <header class="header">
-        <img src="./logo.png" alt="Website logo" class="logo">
-        <nav class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Flash Sale</a>
-            <a href="#">Coupons</a>
-            <a href="#">Brand Specials</a>
+    <!-- ====================== 前台展示区 ====================== -->
+    <div id="frontendPage" class="page-section">
+        <!-- 前台导航栏 -->
+        <nav class="bg-white shadow-sm sticky top-0 z-40">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold text-gray-800">舒适科技 <span class="text-primary">鞋垫系列</span></h1>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors">
+                        <i class="fa fa-shopping-cart text-lg"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors">
+                        <i class="fa fa-user text-lg"></i>
+                    </a>
+                </div>
+            </div>
         </nav>
-        <div class="search-container">
-            <input type="text" class="search-box" placeholder="Search for pottery products...">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="search-button">Search</button>
+
+        <!-- 前台主视觉横幅 -->
+        <header class="bg-gradient-to-r from-blue-50 to-purple-50 py-16 md:py-24">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">行走的舒适革命</h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                    从日常基础到私人定制，四款专业鞋垫，为你提供精准的足部支撑与极致体验
+                </p>
+            </div>
+        </header>
+
+        <!-- 前台产品展示区 -->
+        <main class="container mx-auto px-4 py-12 md:py-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <!-- 基础款前台展示卡片 -->
+                <div class="product-card group" data-product-id="PRO-001">
+                    <div class="relative">
+                        <div class="sales-tag"><i class="fa fa-fire"></i> <span class="sales-total">热销9.8万+</span></div>
+                        <div class="price-tag bg-basic text-white">¥<span class="product-price">22</span></div>
+                        <img 
+                            src="https://placeholder.pics/svg/400x300/EEEEEE-CCCCCC/基础款鞋垫" 
+                            alt="基础款舒适鞋垫" 
+                            class="product-img w-full h-64 object-contain p-6 bg-gray-50 group-hover:scale-105 transition-transform duration-500"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-800 product-name">基础舒适款</h3>
+                        <p class="text-gray-500 mt-2 text-sm product-desc">日常通勤，柔软缓震，入门级舒适体验。</p>
+                        <div class="mt-3 text-xs text-gray-400 flex items-center gap-1">
+                            <i class="fa fa-line-chart text-sales"></i>
+                            <span><span class="sales-month">月销9862</span>双 | 好评率<span class="product-rate">99%</span></span>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="font-bold text-gray-700">¥<span class="product-price">22</span>.00</span>
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg transition-colors">
+                                <i class="fa fa-shopping-cart mr-1"></i> 加入购物车
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 升级款前台展示卡片 -->
+                <div class="product-card group" data-product-id="PRO-002">
+                    <div class="relative">
+                        <div class="sales-tag"><i class="fa fa-fire"></i> <span class="sales-total">热销5.2万+</span></div>
+                        <div class="price-tag bg-upgrade text-white">¥<span class="product-price">58</span></div>
+                        <img 
+                            src="https://placeholder.pics/svg/400x300/EEF5F2/CCE5DD/升级款鞋垫" 
+                            alt="升级款支撑鞋垫" 
+                            class="product-img w-full h-64 object-contain p-6 bg-gray-50 group-hover:scale-105 transition-transform duration-500"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-800 product-name">升级支撑款</h3>
+                        <p class="text-gray-500 mt-2 text-sm product-desc">足弓支撑，透气排汗，适合长时间站立。</p>
+                        <div class="mt-3 text-xs text-gray-400 flex items-center gap-1">
+                            <i class="fa fa-line-chart text-sales"></i>
+                            <span><span class="sales-month">月销5218</span>双 | 好评率<span class="product-rate">98%</span></span>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="font-bold text-gray-700">¥<span class="product-price">58</span>.00</span>
+                            <button class="bg-upgrade/20 hover:bg-upgrade/30 text-upgrade px-4 py-2 rounded-lg transition-colors">
+                                <i class="fa fa-shopping-cart mr-1"></i> 加入购物车
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 检测款前台展示卡片 -->
+                <div class="product-card group" data-product-id="PRO-003">
+                    <div class="relative">
+                        <div class="sales-tag"><i class="fa fa-fire"></i> <span class="sales-total">热销2.7万+</span></div>
+                        <div class="price-tag bg-detect text-white">¥<span class="product-price">88</span></div>
+                        <img 
+                            src="https://placeholder.pics/svg/400x300/EEF0FF/CCD0FF/检测款鞋垫" 
+                            alt="智能检测款鞋垫" 
+                            class="product-img w-full h-64 object-contain p-6 bg-gray-50 group-hover:scale-105 transition-transform duration-500"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-800 product-name">专业检测款</h3>
+                        <p class="text-gray-500 mt-2 text-sm product-desc">压力分布分析，定制化数据参考，运动防护。</p>
+                        <div class="mt-3 text-xs text-gray-400 flex items-center gap-1">
+                            <i class="fa fa-line-chart text-sales"></i>
+                            <span><span class="sales-month">月销2765</span>双 | 好评率<span class="product-rate">97%</span></span>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="font-bold text-gray-700">¥<span class="product-price">88</span>.00</span>
+                            <button class="bg-detect/20 hover:bg-detect/30 text-detect px-4 py-2 rounded-lg transition-colors">
+                                <i class="fa fa-shopping-cart mr-1"></i> 加入购物车
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 定制款前台展示卡片 -->
+                <div class="product-card group border-2 border-custom/30" data-product-id="PRO-004">
+                    <div class="relative">
+                        <div class="sales-tag bg-custom/90"><i class="fa fa-star"></i> <span class="sales-total">热销1.1万+</span></div>
+                        <div class="price-tag bg-custom text-white">¥<span class="product-price">199</span></div>
+                        <div class="absolute top-14 left-4 bg-custom/20 text-custom text-xs font-bold py-1 px-2 rounded">
+                            限量定制
+                        </div>
+                        <img 
+                            src="https://placeholder.pics/svg/400x300/F8F0FF/E8D0FF/定制款鞋垫" 
+                            alt="私人定制款鞋垫" 
+                            class="product-img w-full h-64 object-contain p-6 bg-gray-50 group-hover:scale-105 transition-transform duration-500"
+                        >
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-800 product-name">私人定制款</h3>
+                        <p class="text-gray-500 mt-2 text-sm product-desc">3D扫描建模，全贴合矫形，尊享个性化服务。</p>
+                        <div class="mt-3 text-xs text-gray-400 flex items-center gap-1">
+                            <i class="fa fa-line-chart text-custom"></i>
+                            <span><span class="sales-month">月销1132</span>双 | 好评率<span class="product-rate">100%</span></span>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="font-bold text-gray-700">¥<span class="product-price">199</span>.00</span>
+                            <button class="bg-custom hover:bg-custom/90 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fa fa-shopping-cart mr-1"></i> 立即定制
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 前台底部信息 -->
+        <footer class="bg-gray-800 text-white py-12">
+            <div class="container mx-auto px-4">
+                <div class="text-center">
+                    <p class="text-gray-400">© 2026 舒适科技. 保留所有权利.</p>
+                    <div class="mt-4 flex justify-center space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa fa-weibo"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa fa-wechat"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ====================== 后台管理区 ====================== -->
+    <div id="backendPage" class="page-section hidden">
+        <div class="flex min-h-screen">
+            <!-- 后台侧边栏 -->
+            <aside class="w-64 bg-sidebar text-white h-screen sticky top-0">
+                <div class="p-6 border-b border-gray-700">
+                    <h1 class="text-xl font-bold">舒适科技<span class="text-primary">管理后台</span></h1>
+                </div>
+                
+                <nav class="p-4">
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="sidebar-item active">
+                                <i class="fa fa-cubes"></i>
+                                <span>产品管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-item">
+                                <i class="fa fa-line-chart"></i>
+                                <span>销售数据</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-item">
+                                <i class="fa fa-users"></i>
+                                <span>客户管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-item">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>订单管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-item">
+                                <i class="fa fa-cog"></i>
+                                <span>系统设置</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <div class="absolute bottom-6 left-6 right-6">
+                    <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
+                        <img src="https://placeholder.pics/svg/40x40/6E7191-FFFFFF/管理员" alt="管理员头像" class="w-10 h-10 rounded-full">
+                        <div>
+                            <p class="text-sm font-medium">管理员</p>
+                            <p class="text-xs text-gray-400">admin@example.com</p>
+                        </div>
+                        <a href="#" class="ml-auto text-gray-400 hover:text-white"><i class="fa fa-sign-out"></i></a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 后台主内容区 -->
+            <main class="flex-1 overflow-auto bg-content">
+                <!-- 后台顶部导航 -->
+                <header class="bg-white shadow-sm sticky top-0 z-10">
+                    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <h2 class="text-lg font-bold text-gray-800">鞋垫产品管理</h2>
+                            <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">共4款产品</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="relative">
+                                <input type="text" placeholder="搜索产品..." class="form-input w-64 pr-8 text-sm">
+                                <i class="fa fa-search absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                            <button class="btn btn-primary text-sm">
+                                <i class="fa fa-plus mr-1"></i> 新增产品
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- 后台产品编辑区 -->
+                <div class="container mx-auto px-6 py-8">
+                    <div class="grid grid-cols-1 gap-8">
+                        <!-- 基础款后台编辑卡片 -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden" data-product-id="PRO-001">
+                            <div class="bg-basic/10 px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg text-gray-800 flex items-center">
+                                    <span class="w-3 h-3 bg-basic rounded-full mr-2"></span>
+                                    基础舒适款
+                                    <span class="ml-2 text-sm text-gray-500 font-normal">(ID: PRO-001)</span>
+                                </h3>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <!-- 产品图片 -->
+                                    <div class="border border-gray-200 rounded-lg p-4 flex flex-col items-center">
+                                        <img src="https://placeholder.pics/svg/400x300/EEEEEE-CCCCCC/基础款鞋垫" alt="基础款鞋垫" class="backend-img w-full h-48 object-contain mb-4">
+                                        <label class="btn btn-outline text-sm w-full text-center cursor-pointer upload-btn">
+                                            <i class="fa fa-upload mr-1"></i> 更换图片
+                                        </label>
+                                        <input type="file" class="hidden">
+                                    </div>
+                                    
+                                    <!-- 产品信息 -->
+                                    <div class="md:col-span-2 space-y-4">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">产品名称</label>
+                                                <input type="text" value="基础舒适款" class="form-input backend-name">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">售价 (¥)</label>
+                                                <input type="number" value="22" min="0" step="0.01" class="form-input backend-price">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">累计热销</label>
+                                                <input type="text" value="9.8万+" class="form-input backend-sales-total">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">月销量</label>
+                                                <input type="number" value="9862" min="0" class="form-input backend-sales-month">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">好评率</label>
+                                                <input type="text" value="99%" class="form-input backend-rate">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">库存数量</label>
+                                                <input type="number" value="15800" min="0" class="form-input">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">产品描述</label>
+                                            <textarea rows="3" class="form-input backend-desc">日常通勤，柔软缓震，入门级舒适体验。</textarea>
+                                        </div>
+                                        
+                                        <div class="flex justify-end gap-3 pt-2">
+                                            <button class="btn btn-outline text-sm cancel-btn">
+                                                <i class="fa fa-times mr-1"></i> 取消
+                                            </button>
+                                            <button class="btn btn-success text-sm save-btn">
+                                                <i class="fa fa-save mr-1"></i> 保存修改
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 升级款后台编辑卡片 -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden" data-product-id="PRO-002">
+                            <div class="bg-upgrade/10 px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg text-gray-800 flex items-center">
+                                    <span class="w-3 h-3 bg-upgrade rounded-full mr-2"></span>
+                                    升级支撑款
+                                    <span class="ml-2 text-sm text-gray-500 font-normal">(ID: PRO-002)</span>
+                                </h3>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <!-- 产品图片 -->
+                                    <div class="border border-gray-200 rounded-lg p-4 flex flex-col items-center">
+                                        <img src="https://placeholder.pics/svg/400x300/EEF5F2/CCE5DD/升级款鞋垫" alt="升级款鞋垫" class="backend-img w-full h-48 object-contain mb-4">
+                                        <label class="btn btn-outline text-sm w-full text-center cursor-pointer upload-btn">
+                                            <i class="fa fa-upload mr-1"></i> 更换图片
+                                        </label>
+                                        <input type="file" class="hidden">
+                                    </div>
+                                    
+                                    <!-- 产品信息 -->
+                                    <div class="md:col-span-2 space-y-4">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">产品名称</label>
+                                                <input type="text" value="升级支撑款" class="form-input backend-name">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">售价 (¥)</label>
+                                                <input type="number" value="58" min="0" step="0.01" class="form-input backend-price">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">累计热销</label>
+                                                <input type="text" value="5.2万+" class="form-input backend-sales-total">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">月销量</label>
+                                                <input type="number" value="5218" min="0" class="form-input backend-sales-month">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">好评率</label>
+                                                <input type="text" value="98%" class="form-input backend-rate">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">库存数量</label>
+                                                <input type="number" value="8650" min="0" class="form-input">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">产品描述</label>
+                                            <textarea rows="3" class="form-input backend-desc">足弓支撑，透气排汗，适合长时间站立。</textarea>
+                                        </div>
+                                        
+                                        <div class="flex justify-end gap-3 pt-2">
+                                            <button class="btn btn-outline text-sm cancel-btn">
+                                                <i class="fa fa-times mr-1"></i> 取消
+                                            </button>
+                                            <button class="btn btn-success text-sm save-btn">
+                                                <i class="fa fa-save mr-1"></i> 保存修改
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 检测款后台编辑卡片 -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden" data-product-id="PRO-003">
+                            <div class="bg-detect/10 px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg text-gray-800 flex items-center">
+                                    <span class="w-3 h-3 bg-detect rounded-full mr-2"></span>
+                                    专业检测款
+                                    <span class="ml-2 text-sm text-gray-500 font-normal">(ID: PRO-003)</span>
+                                </h3>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <!-- 产品图片 -->
+                                    <div class="border border-gray-200 rounded-lg p-4 flex flex-col items-center">
+                                        <img src="https://placeholder.pics/svg/400x300/EEF0FF/CCD0FF/检测款鞋垫" alt="检测款鞋垫" class="backend-img w-full h-48 object-contain mb-4">
+                                        <label class="btn btn-outline text-sm w-full text-center cursor-pointer upload-btn">
+                                            <i class="fa fa-upload mr-1"></i> 更换图片
+                                        </label>
+                                        <input type="file" class="hidden">
+                                    </div>
+                                    
+                                    <!-- 产品信息 -->
+                                    <div class="md:col-span-2 space-y-4">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">产品名称</label>
+                                                <input type="text" value="专业检测款" class="form-input backend-name">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">售价 (¥)</label>
+                                                <input type="number" value="88" min="0" step="0.01" class="form-input backend-price">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">累计热销</label>
+                                                <input type="text" value="2.7万+" class="form-input backend-sales-total">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">月销量</label>
+                                                <input type="number" value="2765" min="0" class="form-input backend-sales-month">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">好评率</label>
+                                                <input type="text" value="97%" class="form-input backend-rate">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">库存数量</label>
+                                                <input type="number" value="4200" min="0" class="form-input">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">产品描述</label>
+                                            <textarea rows="3" class="form-input backend-desc">压力分布分析，定制化数据参考，运动防护。</textarea>
+                                        </div>
+                                        
+                                        <div class="flex justify-end gap-3 pt-2">
+                                            <button class="btn btn-outline text-sm cancel-btn">
+                                                <i class="fa fa-times mr-1"></i> 取消
+                                            </button>
+                                            <button class="btn btn-success text-sm save-btn">
+                                                <i class="fa fa-save mr-1"></i> 保存修改
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 定制款后台编辑卡片 -->
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden" data-product-id="PRO-004">
+                            <div class="bg-custom/10 px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg text-gray-800 flex items-center">
+                                    <span class="w-3 h-3 bg-custom rounded-full mr-2"></span>
+                                    私人定制款
+                                    <span class="ml-2 text-sm text-gray-500 font-normal">(ID: PRO-004)</span>
+                                </h3>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <!-- 产品图片 -->
+                                    <div class="border border-gray-200 rounded-lg p-4 flex flex-col items-center">
+                                        <img src="https://placeholder.pics/svg/400x300/F8F0FF/E8D0FF/定制款鞋垫" alt="定制款鞋垫" class="backend-img w-full h-48 object-contain mb-4">
+                                        <label class="btn btn-outline text-sm w-full text-center cursor-pointer upload-btn">
+                                            <i class="fa fa-upload mr-1"></i> 更换图片
+                                        </label>
+                                        <input type="file" class="hidden">
+                                    </div>
+                                    
+                                    <!-- 产品信息 -->
+                                    <div class="md:col-span-2 space-y-4">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">产品名称</label>
+                                                <input type="text" value="私人定制款" class="form-input backend-name">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">售价 (¥)</label>
+                                                <input type="number" value="199" min="0" step="0.01" class="form-input backend-price">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">累计热销</label>
+                                                <input type="text" value="1.1万+" class="form-input backend-sales-total">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">月销量</label>
+                                                <input type="number" value="1132" min="0" class="form-input backend-sales-month">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">好评率</label>
+                                                <input type="text" value="100%" class="form-input backend-rate">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">库存数量</label>
+                                                <input type="number" value="1850" min="0" class="form-input">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">产品描述</label>
+                                            <textarea rows="3" class="form-input backend-desc">3D扫描建模，全贴合矫形，尊享个性化服务。</textarea>
+                                        </div>
+                                        
+                                        <div class="flex justify-end gap-3 pt-2">
+                                            <button class="btn btn-outline text-sm cancel-btn">
+                                                <i class="fa fa-times mr-1"></i> 取消
+                                            </button>
+                                            <button class="btn btn-success text-sm save-btn">
+                                                <i class="fa fa-save mr-1"></i> 保存修改
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
-        <div class="user-links">
-            
-            
-            <a href="#">Login</a>
-            <span style="color: rgba(255, 255, 255, 0.6)">|</span>
-            <a href="#">Register</a>
-           <span style="color: rgba(255, 255, 255, 0.6)">|</span>
+    </div>
 
-            <a href="#">🛒 Shopping Cart</a>
-            <span style="color: rgba(255, 255, 255, 0.6)">|</span>
-            <a href="./zh.html" id="language-switch">CH</a>
-        </div>
-    </header>
+    <script>
+        // ====================== 核心功能：页面切换 ======================
+        const toggleBtn = document.getElementById('togglePage');
+        const frontendPage = document.getElementById('frontendPage');
+        const backendPage = document.getElementById('backendPage');
+        let isBackend = false;
 
-    <aside class="category-sidebar">
-        <ul class="category-menu">
-            <li>Traditional Pottery Works</li>
-            <li>Creative Pottery Ornaments</li>
-            <li>Pottery Tea Sets</li>
-            <li>Ceramic Sculptures</li>
-            <li>Decorative Plates</li>
-            <li>Art Vases</li>
-            <li>High-end Paper-shell Pottery</li>
-        </ul>
-    </aside>
+        toggleBtn.addEventListener('click', function() {
+            isBackend = !isBackend;
+            if (isBackend) {
+                // 切换到后台
+                frontendPage.classList.add('hidden');
+                backendPage.classList.remove('hidden');
+                toggleBtn.innerHTML = '<i class="fa fa-eye mr-1"></i> 切换到产品展示';
+                toggleBtn.classList.remove('bg-primary');
+                toggleBtn.classList.add('bg-gray-800');
+            } else {
+                // 切换到前台
+                backendPage.classList.add('hidden');
+                frontendPage.classList.remove('hidden');
+                toggleBtn.innerHTML = '<i class="fa fa-cog mr-1"></i> 切换到管理后台';
+                toggleBtn.classList.remove('bg-gray-800');
+                toggleBtn.classList.add('bg-primary');
+            }
+        });
 
-    <main class="product-grid">
-        <!-- Product cards (Keep the original structure provided by the user, and replace the image paths yourself) -->
-        <article class="product-card">
-            <span class="promotion-tag">Limited-time Flash Sale</span>
-            <img src="https://pcsdata.baidu.com/thumbnail/6bb34b337g3bc65471abbe6f877df481?fid=397800431-16051585-124697464142689&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-4ocTMIR2AtHP7pjo5K8DAjOecN4%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957033965787252022&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Double-handled Black Pottery Pot" class="product-img">
-            <h3 class="product-title">Double-handled Black Pottery Pot</h3>
-            <div class="product-price">
-                $688.00
-                <span class="original-price">$876.00</span>
-            </div>
-            <a href="#" class="buy-button">Buy Now</a>
-        </article>
+        // ====================== 核心功能：数据同步更新 ======================
+        // 保存按钮点击事件
+        document.querySelectorAll('.save-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 获取当前产品卡片和产品ID
+                const backendCard = this.closest('[data-product-id]');
+                const productId = backendCard.getAttribute('data-product-id');
+                const frontendCard = document.querySelector(`#frontendPage [data-product-id="${productId}"]`);
 
-        <article class="product-card">
-            <span class="promotion-tag">New Arrival</span>
-            <img src="https://pcsdata.baidu.com/thumbnail/3f36a8ff8o63e06326823d4b8acb6efe?fid=397800431-16051585-405982205595799&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-qXXpiRm9QQsAxdojUt0hlPd1moA%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Blue and White Porcelain Bowl Set" class="product-img">
-            <h3 class="product-title">Black Pottery Small Bowl Set</h3>
-            <div class="product-price">
-                $398.00
-                <span class="original-price">$499.00</span>
-            </div>
-            <a href="#" class="buy-button">Buy Now</a>
-        </article>
+                // 获取后台输入的最新数据
+                const newName = backendCard.querySelector('.backend-name').value;
+                const newPrice = backendCard.querySelector('.backend-price').value;
+                const newSalesTotal = backendCard.querySelector('.backend-sales-total').value;
+                const newSalesMonth = backendCard.querySelector('.backend-sales-month').value;
+                const newRate = backendCard.querySelector('.backend-rate').value;
+                const newDesc = backendCard.querySelector('.backend-desc').value;
+                const newImgSrc = backendCard.querySelector('.backend-img').src;
 
-        <article class="product-card">
-            <img src="https://pcsdata.baidu.com/thumbnail/aa7003c20u5fa2a4529ba396fa4f4599?fid=397800431-16051585-1058977902222712&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-oDm2ZJhdcnLLXs5HjzaFE9Pazyw%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Art Vase" class="product-img">
-            <h3 class="product-title">Black Pottery Four-ear Pot</h3>
-            <div class="product-price">
-                $572.00
-            </div>
-            <a href="#" class="buy-button">Buy Now</a>
-        </article>
+                // 更新前台对应数据
+                frontendCard.querySelector('.product-name').textContent = newName;
+                frontendCard.querySelectorAll('.product-price').forEach(el => {
+                    el.textContent = newPrice;
+                });
+                frontendCard.querySelector('.sales-total').textContent = `热销${newSalesTotal}`;
+                frontendCard.querySelector('.sales-month').textContent = `月销${newSalesMonth}`;
+                frontendCard.querySelector('.product-rate').textContent = newRate;
+                frontendCard.querySelector('.product-desc').textContent = newDesc;
+                frontendCard.querySelector('.product-img').src = newImgSrc;
 
-        <article class="product-card">
-            <img src="https://pcsdata.baidu.com/thumbnail/494cd8cedk9f50b86f6848b2a6c8b1d5?fid=397800431-16051585-298993675410356&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-MR9k6pSbEkosICiQRtlhmVFOqGE%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Ceramic Tea Set" class="product-img">
-            <h3 class="product-title">Black Pottery Double Pots</h3>
-            <div class="product-price">
-                $599.00
-            </div>
-            <a href="#" class="buy-button">Buy Now</a>
-        </article>
+                // 提示保存成功
+                alert(`${newName} 修改已保存！前台数据已同步更新`);
+            });
+        });
 
-        <article class="product-card">
-            <span class="promotion-tag">Limited-time Flash Sale</span>
-            <img src="https://pcsdata.baidu.com/thumbnail/4d7e61af0o5e4708d7b704bf36cba81a?fid=397800431-16051585-215639458074096&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-DQ2rklydQ3UAE7yIhJALAqXNRSo%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Black Pottery Teacup" class="product-img">
-            <h3 class="product-title">Black Pottery Charcoal Tea-boiling Stove</h3>
-            <div class="product-price">
-                $729.00
-                <span class="original-price">$998.00</span>
-            </div>
-            <a href="#" class="buy-button">Buy Now</a>
-        </article>
+        // 取消按钮点击事件（恢复原始值）
+        document.querySelectorAll('.cancel-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const backendCard = this.closest('[data-product-id]');
+                // 这里可以扩展：保存初始值，点击取消时恢复
+                alert('已取消修改，输入框已恢复原始值');
+                // 简单重置（实际项目中可存储初始值）
+                backendCard.querySelectorAll('input, textarea').forEach(input => {
+                    input.value = input.defaultValue;
+                });
+            });
+        });
 
-        <article class="product-card">
-            <img src="https://pcsdata.baidu.com/thumbnail/2b3f6479ep15846f48152b068480347d?fid=397800431-16051585-746379539386064&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-vOdcZREYigMe7Aeu4Enk7VXFHuU%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Ceramic Decorative Plate" class="product-img">
-            <h3 class="product-title">Black Pottery Art Vase</h3>
-            <div class="product-price">
-                $699.00
-            </div>
-            <a href="#" class="buy-button">Buy Now</a>
-        </article>
+        // ====================== 辅助功能：图片上传预览 ======================
+        document.querySelectorAll('.upload-btn').forEach(label => {
+            label.addEventListener('click', function(e) {
+                e.preventDefault();
+                const fileInput = this.nextElementSibling;
+                fileInput.click();
+                
+                fileInput.addEventListener('change', function() {
+                    if (this.files.length > 0) {
+                        const fileName = this.files[0].name;
+                        alert(`已选择图片：${fileName}\n（实际项目中需对接后端上传接口）`);
+                        // 更新后台图片预览
+                        const backendImg = this.closest('.flex-col').querySelector('.backend-img');
+                        backendImg.src = `https://placeholder.pics/svg/400x300/RANDOM/${fileName}`;
+                    }
+                });
+            });
+        });
 
-        <article class="product-card">
-            <span class="promotion-tag">Hot Sale</span>
-            <img src="https://pcsdata.baidu.com/thumbnail/6601cfd73ifabe0ee4ee444155555b72?fid=397800431-16051585-419820360275958&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-H3te2bvG3EVrLoLnPdhLrH%2F8GF4%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Purple Clay Teapot" class="product-img">
-            <h3 class="product-title">Eggshell Pottery Ornament</h3>
-            <div class="product-price">
-                $459.00
-            </div>
-            <a href="#" class="buy-button">Buy Now</a>
-        </article>
-
-        <article class="product-card">
-            <img src="https://pcsdata.baidu.com/thumbnail/eadfc1d7au210c4772d50827e2aaa550?fid=397800431-16051585-899792112186151&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-OnOnz7nue5hFVjOdcPYgo%2B1JF20%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=8957058740317071028&dp-callid=0&time=1747551600&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video" alt="Ceramic Vase" class="product-img">
-            <h3 class="product-title">Black Pottery Buddha's Hand Ornament</h3>
-            <div class="product-price">
-                $329.00
-            </div>
-            <a href="#" class="buy-button">Buy Now</a>
-        </article>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-section">
-            <h4>Customer Service</h4>
-            <ul>
-                <li>Help Center</li>
-                <li>After-sales Service</li>
-                <li>Customer Support</li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h4>About Us</h4>
-            <ul>
-                <li>Company Introduction</li>
-                <li>Contact Us</li>
-                <li>Join Us</li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <p>© 2025 Xuan Ming cross-border. All rights reserved.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </footer>
-    <script src="https://kit.fontawesome.com/your-font-awesome-kit-id.js" crossorigin="anonymous"></script>
+        // ====================== 前台交互：加入购物车提示 ======================
+        document.querySelectorAll('#frontendPage button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('已加入购物车！');
+            });
+        });
+    </script>
 </body>
-
 </html>
