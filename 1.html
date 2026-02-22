@@ -1,0 +1,809 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>启跃星鞋垫商城</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        /* 头部样式 */
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #d81b60;
+        }
+        .search-bar {
+            flex: 1;
+            margin: 0 20px;
+            position: relative;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #999;
+        }
+        .header-actions {
+            display: flex;
+            gap: 20px;
+        }
+        .header-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+        }
+        .header-action i {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        /* 导航栏 */
+        nav {
+            background-color: #fff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #d81b60;
+        }
+        /* 主要内容区 */
+        .main-content {
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+        /* 左侧促销区 */
+        .promo-sidebar {
+            width: 300px;
+        }
+        .welcome-offer {
+            background-color: #d81b60;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .welcome-offer h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .welcome-offer .discount {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .welcome-offer p {
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        .welcome-offer .code {
+            background-color: #fff;
+            color: #d81b60;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .size-guide {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .size-guide h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .size-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .size-option {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .size-option.active {
+            border-color: #d81b60;
+            color: #d81b60;
+        }
+        /* 产品详情区 */
+        .product-details {
+            flex: 1;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+        .stars {
+            color: #ffc107;
+        }
+        .product-description {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .product-images {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        .product-image {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        .product-image.active {
+            border-color: #d81b60;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product-main-image {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .product-main-image img {
+            width: 100%;
+            height: auto;
+        }
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d81b60;
+            margin-bottom: 15px;
+        }
+        .stock-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #4caf50;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .add-to-cart {
+            background-color: #d81b60;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        .add-to-cart:hover {
+            background-color: #c2185b;
+        }
+        .benefits {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .benefit {
+            flex: 1;
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .benefit h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        /* 推荐产品区 */
+        .recommended-products {
+            padding: 20px;
+        }
+        .recommended-products h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+        .product-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .product-card-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .product-card-info {
+            padding: 15px;
+        }
+        .product-card-category {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .product-card-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-card-stars {
+            color: #ffc107;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .product-card-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #d81b60;
+            margin-bottom: 10px;
+        }
+        .product-card-action {
+            background-color: #d81b60;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .product-card-action:hover {
+            background-color: #c2185b;
+        }
+        /* 产品介绍区 - 优化样式以适配新内容 */
+        .product-intro {
+            padding: 30px 20px;
+            background-color: #fafafa;
+            margin-bottom: 30px;
+        }
+        .product-intro h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #d81b60;
+            font-weight: bold;
+        }
+        .product-intro h4 {
+            font-size: 18px;
+            margin: 25px 0 15px 0;
+            color: #333;
+            font-weight: bold;
+        }
+        .product-intro p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        .product-intro ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        .product-intro li {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .product-intro strong {
+            color: #d81b60;
+        }
+        /* 评价区 */
+        .reviews-section {
+            padding: 20px;
+        }
+        .reviews-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .reviews-summary {
+            text-align: center;
+        }
+        .reviews-score {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .reviews-stars {
+            color: #ffc107;
+            margin-bottom: 5px;
+        }
+        .reviews-count {
+            font-size: 12px;
+            color: #666;
+        }
+        .reviews-chart {
+            flex: 1;
+            margin-left: 30px;
+        }
+        .review-item {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .review-author {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .review-date {
+            font-size: 12px;
+            color: #666;
+        }
+        .review-stars {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+        .review-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .review-helpful {
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        .review-helpful span {
+            cursor: pointer;
+        }
+        .review-helpful span:hover {
+            color: #d81b60;
+        }
+        .review-reply {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #666;
+        }
+        .load-more-reviews {
+            background-color: #d81b60;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+        .load-more-reviews:hover {
+            background-color: #c2185b;
+        }
+        /* 页脚 */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .footer-links a:hover {
+            color: #d81b60;
+        }
+        .copyright {
+            font-size: 12px;
+            color: #999;
+        }
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .promo-sidebar {
+                width: 100%;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            .product-intro h3 {
+                font-size: 18px;
+            }
+            .product-intro h4 {
+                font-size: 16px;
+            }
+            .product-intro p, .product-intro li {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header>
+            <div class="logo">启跃星</div>
+            <div class="search-bar">
+                <input type="text" placeholder="寻找产品">
+                <button>🔍</button>
+            </div>
+            <div class="header-actions">
+                <div class="header-action">
+                    <i>👤</i>
+                    <span>我的账户</span>
+                </div>
+                <div class="header-action">
+                    <i>🛒</i>
+                    <span>购物车</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 导航栏 -->
+        <nav>
+            <ul>
+                <li><a href="#">基础鞋垫</a></li>
+                <li><a href="#">检测鞋垫</a></li>
+                <li><a href="#">定制鞋垫</a></li>
+                <li><a href="#">升级鞋垫</a></li>
+                <li><a href="#">关于我们</a></li>
+                <li><a href="#">联系我们</a></li>
+            </ul>
+        </nav>
+
+        <!-- 主要内容区 -->
+        <div class="main-content">
+            <!-- 左侧促销区 -->
+            <div class="promo-sidebar">
+                <div class="welcome-offer">
+                    <h3>新用户专享</h3>
+                    <div class="discount">-20%</div>
+                    <p>首单立减优惠</p>
+                    <div class="code">使用码：QIYUEX</div>
+                </div>
+                <div class="size-guide">
+                    <h4>尺码选择</h4>
+                    <div class="size-options">
+                        <div class="size-option active">19-31</div>
+                        <div class="size-option">32-44</div>
+                    </div>
+                    <p style="font-size: 12px; color: #666;">请选择适合您的尺码</p>
+                </div>
+            </div>
+
+            <!-- 产品详情区 -->
+            <div class="product-details">
+                <h1 class="product-title">基础款鞋垫</h1>
+                <div class="product-meta">
+                    <span>参考编号：IN001</span>
+                    <span class="stars">★★★★☆ (120 条评论)</span>
+                </div>
+                <p class="product-description">
+                    这款鞋垫通过渐进式提醒机制和自适应力学分区，主动训练足弓而非被动支撑。
+                </p>
+                <div class="product-main-image">
+                    <img src="./58.png" alt="磁性鞋垫">
+                </div>
+                <div class="product-images">
+                    <div class="product-image active">
+                        <img src="./581.png" alt="视图1">
+                    </div>
+                    <div class="product-image">
+                        <img src="./582.png" alt="视图2">
+                    </div>
+                    <div class="product-image">
+                        <img src="./583.png" alt="视图3">
+                    </div>
+                </div>
+                <div class="product-price">¥58.00</div>
+                <div class="stock-status">
+                    <span>✅</span>
+                    <span>现货</span>
+                </div>
+                <button class="add-to-cart">加入购物车 🛒</button>
+                <div class="benefits">
+                    <div class="benefit">
+                        <h4>由鞋垫商城出售并发运</h4>
+                        <p>满99元免运费，订单将在24小时内发出。</p>
+                    </div>
+                    <div class="benefit">
+                        <h4>鞋垫的好处</h4>
+                        <p>使用此产品，会员获得34点忠诚度积分，助力升级。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 推荐产品区 -->
+        <div class="recommended-products">
+            <h3>你可能也会喜欢</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="./58.png" alt="基础款鞋垫" class="product-card-image">
+                    <div class="product-card-info">
+                        <div class="product-card-category">基础鞋垫</div>
+                        <h4 class="product-card-title">基础款鞋垫</h4>
+                        <div class="product-card-stars">★★★★☆ (327 条评论)</div>
+                        <div class="product-card-price">¥58.00</div>
+                        <button class="product-card-action">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="./199.png" alt="检测款鞋垫" class="product-card-image">
+                    <div class="product-card-info">
+                        <div class="product-card-category">检测鞋垫</div>
+                        <h4 class="product-card-title">检测款鞋垫</h4>
+                        <div class="product-card-stars">★★★★☆ (133 条评论)</div>
+                        <div class="product-card-price">¥199.00</div>
+                        <button class="product-card-action">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="./299.png" alt="定制款鞋垫" class="product-card-image">
+                    <div class="product-card-info">
+                        <div class="product-card-category">定制鞋垫</div>
+                        <h4 class="product-card-title">定制款鞋垫</h4>
+                        <div class="product-card-stars">★★★★☆ (89 条评论)</div>
+                        <div class="product-card-price">¥299.00</div>
+                        <button class="product-card-action">加入购物车</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="./99.png" alt="升级款鞋垫" class="product-card-image">
+                    <div class="product-card-info">
+                        <div class="product-card-category">升级鞋垫</div>
+                        <h4 class="product-card-title">升级款鞋垫</h4>
+                        <div class="product-card-stars">★★★★☆ (67 条评论)</div>
+                        <div class="product-card-price">¥99.00</div>
+                        <button class="product-card-action">加入购物车</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 产品介绍区 -->
+        <div class="product-intro">
+            <h3>产品详情</h3>
+            
+            <h4>一、核心卖点</h4>
+            <p>1. <strong>智能生物反馈机制——真正"会思考"的鞋垫</strong><br>
+            传统矫正鞋垫只会"垫高"，我们教你"用脚"。<br>
+            这款鞋垫采用形状记忆聚合物打造渐进式提醒系统，0-2mm精准抬升足弓位置，像一位无声的康复师轻柔提醒你的脚部正确发力，拒绝暴力矫正带来的疼痛。内置学习记忆功能，两周即可锁定你的足弓塌陷模式，针对性地重塑足底肌肉记忆。热敏变色环设计让进度一目了然，从黄色变为橙色实时提示使用状态，让进步看得见。温度复位机制更是贴心，35°C以上自动复位，一招解决误触发的烦恼。<br>
+            生理性扁平足正确干预率达到90%以上——这不是靠垫，是靠练。</p>
+            
+            <p>2. <strong>多态自适应力学架构——一双鞋垫，读懂你的每一步</strong><br>
+            不是所有脚都需要同样的支撑，你的鞋垫应该像你的肌肉一样"聪明"。<br>
+            足弓区域采用TPEE与碳纤维复合材质，邵氏硬度C75-80度，提供稳定支撑，抗扭不塌陷。前掌区域使用EVA蜂窝结构，软硬适中，能量反馈提升85%，让每一步起步都更加轻盈。后跟区域配备微液压减震系统，能够智能感知你的步速，慢速时柔软舒适，快速时硬朗支撑，自动调节缓震强度。<br>
+            这款鞋垫适配30-80kg体重范围，全家人都能找到合适的感觉。5万次压缩循环的使用寿命，每天走1万步，陪你3年不变形。</p>
+            
+            <p>3. <strong>立体微环境生态治理系统——让你的脚会呼吸</strong><br>
+            抗菌不等于"不透气"，我们做的是微环境生态。<br>
+            内层接触皮肤部分采用80%棉加20%竹炭纤维，吸湿抗菌，抗菌率85%以上，贴肤敏感肌也能安心使用。外层采用透气网孔EVA材质，构建三级导汗通道，透湿率达到800g/m²/24h，相当于给脚开了个空调系统。防水等级达到IPX4，日常泼溅无忧，雨天通勤也不怕。</p>
+            
+            <h4>二、谁需要它？</h4>
+            <p>久站职业人群包括医护人员、教师、厨师、收银员，站一天脚不酸。运动爱好者如跑步、健身、篮球爱好者，能够提升能量反馈，降低损伤风险。轻中度生理性扁平足患者和足底筋膜炎患者，需要科学干预而非暴力矫正。成长期儿童3-16岁处于足弓发育关键期，早干预少遗憾。久坐办公室人群缺乏足部锻炼，足弓塌陷风险高。</p>
+            
+            <h4>三、为什么选择我们？</h4>
+            <p>普通矫正鞋垫采用被动支撑逻辑，只是简单垫高足弓。我们的产品采用主动训练逻辑，帮助你重塑肌肉记忆。普通鞋垫是均码设计，千人一面。我们的产品采用智能分区设计，自适应30-80kg体重。普通鞋垫使用寿命仅3-6个月就会塌陷。我们的产品可以使用3年不变形，经受5万次压缩循环。普通鞋垫的抗菌方式是简单涂层，容易失效。我们的产品采用竹炭纤维加立体透气，实现长效抗菌。普通鞋垫没有可视化反馈机制。我们的产品配备热敏变色环，让进步看得见。普通鞋垫要么过硬要么过软，难以兼顾舒适度。我们的产品采用分区硬度设计，该硬的地方硬，该软的地方软。</p>
+            
+            <h4>四、用户须知</h4>
+            <p><strong>正确使用方式</strong><br>
+            前3天建议每天使用2到3小时，逐步增加至全天使用，给足部肌肉充分的适应时间。建议搭配后跟有包裹性、鞋内空间充足的鞋子使用，运动鞋和皮鞋都可以，但避免浅口平底鞋或拖鞋。如果遇到热敏变色环误触发橙色预警，可以用35摄氏度以上温水浸泡1到2分钟或放置阳光下暴晒即可复位。每天配合5到10分钟足底抓握、提踵训练，矫正效果可以提升50%以上。</p>
+            
+            <p><strong>注意事项</strong><br>
+            重度病理性扁平足患者需医生评估后使用。足部有开放性伤口、感染或严重皮肤病的人群不宜使用。术后恢复期患者需遵医嘱使用。<br>
+            初次佩戴时足弓可能出现轻微酸胀感，这是正常现象，3到7天即可缓解。小腿肌肉出现疲劳说明足弓开始正确发力，1到2周就能适应。如果疼痛持续超过2周或加剧，请暂停使用并咨询医生。<br>
+            内层竹炭棉可用中性洗涤剂手洗，自然阴干。外层EVA可用湿布擦拭，避免暴晒和高温烘烤。每周取出通风晾晒，保持干燥。根据使用频率和变形程度建议1.5到2年更换，重度使用者建议1年更换。</p>
+            
+            <h4>五、常见问题解答</h4>
+            <ul>
+                <li>多久能看到效果？轻度扁平足2到4周能感知改善，中度需要6到12周，儿童发育期效果更明显。请配合训练坚持使用。</li>
+                <li>可以直接全天佩戴吗？不建议。前3天建议每天2到3小时，逐步增加时间，让足部肌肉适应新的受力方式。</li>
+                <li>两周锁定后还能调整吗？可以。通过温度复位机制，35摄氏度以上即可重新激活记忆功能，但建议在专业人员指导下进行。</li>
+                <li>体重80kg以上可以使用吗？可以使用，但支撑强度可能略低于理想状态，建议联系客服获取定制化建议。</li>
+                <li>孩子多大可以用？3岁以上儿童即可使用，但6岁以下建议在医生指导下配合步态训练。</li>
+            </ul>
+            
+            <h4>六、购买建议</h4>
+            <p>日常通勤和久站工作场景适合标准版，能够缓解脚酸脚累，一整天轻松。运动健身场景适合运动增强版，能量反馈提升，优化运动表现。儿童发育期矫正适合青少年版，配合步态训练，促进足弓发育。中度扁平足干预适合医疗加强版，主动训练加稳定支撑，双管齐下。</p>
+        </div>
+
+        <!-- 评价区 -->
+        <div class="reviews-section">
+            <div class="reviews-header">
+                <div class="reviews-summary">
+                    <div class="reviews-score">4.8 /5</div>
+                    <div class="reviews-stars">★★★★☆</div>
+                    <div class="reviews-count">基于150条客户评价</div>
+                </div>
+                 <div class="reviews-chart">
+                    <!-- 这里可以添加评分图表，使用Chart.js等库实现 -->
+                    <div style="height: 100px;background-color: #f5f5f5;border-radius: 8px;display: flex;align-items: flex-end;justify-content: space-around;padding: 0 10px;">
+                        <div style="width: 15px;height: 0%;background-color: #d81b60;"></div>
+                        <div style="width: 15px;height: 0;background-color: #d81b60;"></div>
+                        <div style="width: 15px;height: 10%;background-color: #d81b60;"></div>
+                        <div style="width: 15px;height: 40;background-color: #d81b60;"></div>
+                        <div style="width: 15px;height: 90%;background-color: #d81b60;"></div>
+                    </div>
+                    <div style="justify-content
+Aligns flex items along the main axis of the current line of the flex container.
+
+在主要浏览器中广泛可用(Baseline 自2018年3月 起)
+了解详细信息
+
+不显示: space-around;display: flex;justify-content: space-between;font-size: 12px;color: #666;margin-top: 5px;display
+In combination with 'float' and 'position', determines the type of box or boxes that are generated for an element.
+
+在主要浏览器中广泛可用(Baseline 自2018年1月 起)
+了解详细信息
+
+不显示: flex;align-items: flex-end;justify-content: space-around;padding: 0 10px;">
+                        <span>1★</span>
+                        <span>2★</span>
+                        <span>3★</span>
+                        <span>4★</span>
+                        <span>5★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="review-author">为何早睡早起</div>
+                    <div class="review-date">2026年1月24日</div>
+                </div>
+                <div class="review-stars">★★★★★ 5/5</div>
+                <div class="review-text">非常有效！</div>
+                <div class="review-helpful">
+                    <span>👍 0</span>
+                    <span>👎 0</span>
+                </div>
+            </div>
+
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="review-author">D19986756</div>
+                    <div class="review-date">2026年1月1日</div>
+                </div>
+                <div class="review-stars">★★★★☆ 4/5</div>
+                <div class="review-text">满足</div>
+                <div class="review-helpful">
+                    <span>👍 0</span>
+                    <span>👎 0</span>
+                </div>
+            </div>
+
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="review-author">水仙花</div>
+                    <div class="review-date">2025年12月31日</div>
+                </div>
+                <div class="review-stars">★★★★★ 5/5</div>
+                <div class="review-text">非常有效地缓解了足底的疼痛</div>
+                <div class="review-helpful">
+                    <span>👍 0</span>
+                    <span>👎 0</span>
+                </div>
+                <div class="review-reply">
+                    <strong>来自鞋垫商城的评论，2025年12月12日</strong><br>
+                    你好水仙花，因为你会去回头，正好！好人总是反复学习我们的产品，因为它支持你在你的生活中。我们很高兴你对我们的产品和我们的服务感到满意。你的评论鼓励我们继续不断改善我们的服务。礼貌，金队。
+                </div>
+            </div>
+
+            <button class="load-more-reviews">更多评论...</button>
+        </div>
+
+        <!-- 页脚 -->
+        <footer>
+            <div class="footer-links">
+                <a href="#">隐私政策</a>
+                <a href="#">一般条款</a>
+                <a href="#">条件</a>
+                <a href="#">网站地图</a>
+                <a href="#">联系方式</a>
+            </div>
+            <div class="copyright">© 垫启未来</div>
+        </footer>
+    </div>
+
+
+</body></html>
