@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学生睡眠质量调查</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+
+body{
+overflow:hidden;
+background:#050816;
+color:#fff;
+}
+
+/* ===== 动态星空背景 ===== */
+.bg{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,rgba(0,180,255,.25),transparent 40%),
+radial-gradient(circle at 80% 30%,rgba(120,80,255,.18),transparent 45%),
+radial-gradient(circle at 50% 80%,rgba(0,255,200,.12),transparent 50%),
+linear-gradient(135deg,#050816,#070B1A);
+z-index:-2;
+overflow:hidden;
+}
+
+.bg::before{
+content:"";
+position:absolute;
+width:200%;
+height:200%;
+background-image:radial-gradient(#ffffff 1px,transparent 1px);
+background-size:35px 35px;
+opacity:.08;
+animation:moveStars 60s linear infinite;
+}
+
+@keyframes moveStars{
+from{transform:translateY(0);}
+to{transform:translateY(-600px);}
+}
+
+/* ===== 页面切换 ===== */
+.page{
+position:absolute;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+
+opacity:0;
+transform:scale(1.08);
+filter:blur(10px);
+transition:.6s ease;
+pointer-events:none;
+}
+
+.page.active{
+opacity:1;
+transform:scale(1);
+filter:blur(0);
+pointer-events:auto;
+}
+
+/* ===== 卡片 ===== */
+.card{
+width:100%;
+max-width:460px;
+padding:28px;
+border-radius:28px;
+
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(22px);
+border:1px solid rgba(255,255,255,.15);
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.4),
+inset 0 0 20px rgba(255,255,255,.05);
+
+text-align:center;
+}
+
+/* 标题 */
+h1{
+font-size:30px;
+margin-bottom:10px;
+}
+
+h2{
+font-size:22px;
+margin-bottom:14px;
+opacity:.95;
+}
+
+p{
+opacity:.8;
+line-height:1.7;
+}
+
+/* ===== 加载动画 ===== */
+.loader{
+width:90px;
+height:90px;
+margin:20px auto;
+border-radius:50%;
+border:3px solid rgba(255,255,255,.15);
+border-top:3px solid #4FE3FF;
+animation:spin 1s linear infinite;
+box-shadow:0 0 25px rgba(0,200,255,.5);
+}
+
+@keyframes spin{
+to{transform:rotate(360deg);}
+}
+
+/* ===== 按钮 ===== */
+.btn{
+margin-top:18px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+
+background:linear-gradient(135deg,#4F8CFF,#4FE3FF);
+color:#fff;
+font-weight:600;
+font-size:15px;
+
+box-shadow:0 10px 30px rgba(0,140,255,.35);
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+box-shadow:0 15px 40px rgba(0,200,255,.45);
+}
+
+/* ===== 进度条 ===== */
+.progress{
+height:7px;
+background:rgba(255,255,255,.1);
+border-radius:20px;
+overflow:hidden;
+margin-bottom:18px;
+}
+
+.bar{
+height:100%;
+background:linear-gradient(90deg,#4F8CFF,#4FE3FF,#8A7CFF);
+background-size:200% 100%;
+animation:flow 2s linear infinite;
+}
+
+@keyframes flow{
+0%{background-position:0 0;}
+100%{background-position:200% 0;}
+}
+
+/* ===== 选项卡片 ===== */
+.option{
+padding:14px;
+margin:10px 0;
+border-radius:16px;
+
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.1);
+
+cursor:pointer;
+transition:.25s;
+text-align:left;
+}
+
+.option:hover{
+transform:scale(1.03);
+border-color:rgba(79,227,255,.5);
+}
+
+.option.selected{
+background:linear-gradient(135deg,#4F8CFF,#4FE3FF);
+box-shadow:0 0 20px rgba(79,227,255,.4);
+transform:scale(1.05);
+}
+
+/* ===== 输入框 ===== */
+textarea{
+width:100%;
+height:140px;
+margin-top:12px;
+padding:14px;
+
+border:none;
+outline:none;
+border-radius:16px;
+
+background:rgba(255,255,255,.06);
+color:#fff;
+resize:none;
+}
+
+/* ===== 成功动画 ===== */
+.success{
+font-size:80px;
+color:#00FFB2;
+text-shadow:0 0 20px #00FFB2;
+animation:pop .6s ease;
+}
+
+@keyframes pop{
+0%{transform:scale(.2);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+/* ===== 尾页 ===== */
+.signature{
+margin-top:16px;
+opacity:.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<!-- 加载页 -->
+<div class="page active" id="p1">
+<div class="card">
+<h2>姓名：XXX</h2>
+<div class="loader"></div>
+<p>正在进入系统...</p>
+</div>
+</div>
+
+<!-- 首页 -->
+<div class="page" id="p2">
+<div class="card">
+<h1>🌙 睡眠质量调查</h1>
+<p>大学生睡眠行为研究问卷</p>
+<p>预计1分钟完成</p>
+<button class="btn" onclick="go(3)">开始调查</button>
+</div>
+</div>
+
+<!-- 单选 -->
+<div class="page" id="p3">
+<div class="card">
+<div class="progress"><div class="bar" style="width:33%"></div></div>
+
+<h2>你的睡眠时长？</h2>
+
+<div class="option single">少于5小时</div>
+<div class="option single">5~6小时</div>
+<div class="option single">6~8小时</div>
+<div class="option single">8小时以上</div>
+
+<button class="btn" onclick="go(4)">下一题</button>
+</div>
+</div>
+
+<!-- 多选 -->
+<div class="page" id="p4">
+<div class="card">
+<div class="progress"><div class="bar" style="width:66%"></div></div>
+
+<h2>影响因素（可多选）</h2>
+
+<div class="option multi">📱 手机娱乐</div>
+<div class="option multi">📚 学业压力</div>
+<div class="option multi">🏠 宿舍环境</div>
+<div class="option multi">🎮 游戏熬夜</div>
+<div class="option multi">💭 情绪问题</div>
+
+<button class="btn" onclick="go(5)">下一题</button>
+</div>
+</div>
+
+<!-- 文本 -->
+<div class="page" id="p5">
+<div class="card">
+<div class="progress"><div class="bar" style="width:100%"></div></div>
+
+<h2>你的建议</h2>
+
+<textarea placeholder="请输入内容..."></textarea>
+
+<button class="btn" onclick="go(6)">提交问卷</button>
+</div>
+</div>
+
+<!-- 成功 -->
+<div class="page" id="p6">
+<div class="card">
+<div class="success">✓</div>
+<h1>提交成功</h1>
+<p>感谢参与本次调查</p>
+<button class="btn" onclick="go(7)">查看结果</button>
+</div>
+</div>
+
+<!-- 尾页 -->
+<div class="page" id="p7">
+<div class="card">
+<h1>谢谢参与</h1>
+<p>大学生睡眠质量调查</p>
+<p>愿你拥有高质量睡眠</p>
+
+<div class="signature">
+制作人：XXX<br>
+2026课程作业
+</div>
+</div>
+</div>
+
+<script>
+
+// 自动加载
+setTimeout(()=>go(2),2200);
+
+function go(n){
+document.querySelectorAll('.page')
+.forEach(p=>p.classList.remove('active'));
+document.getElementById('p'+n).classList.add('active');
+}
+
+// 单选
+document.querySelectorAll('.single').forEach(el=>{
+el.onclick=()=>{
+document.querySelectorAll('.single')
+.forEach(i=>i.classList.remove('selected'));
+el.classList.add('selected');
+}
+});
+
+// 多选
+document.querySelectorAll('.multi').forEach(el=>{
+el.onclick=()=>{
+el.classList.toggle('selected');
+}
+});
+
+</script>
+
+</body>
+</html>
